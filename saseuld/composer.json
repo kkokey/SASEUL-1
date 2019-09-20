@@ -1,0 +1,49 @@
+{
+    "name": "artifriends/saseul-origin-saseuld",
+    "type": "project",
+    "authors": [
+        {
+            "name": "artifriends",
+            "email": "help@artifriends.com"
+        }
+    ],
+    "scripts": {
+        "start": "php saseuld",
+        "test": "./vendor/bin/kahlan",
+        "fixer": "./vendor/bin/php-cs-fixer fix --using-cache=no",
+        "phan": "./vendor/bin/phan"
+    },
+    "autoload": {
+        "psr-4": {
+            "src\\": "./src/",
+            "src\\Config\\": "../common/Config/",
+            "src\\System\\": "../common/System/",
+            "src\\Util\\": "../common/Util/",
+            "src\\Method\\": "../custom/Method/",
+            "src\\Request\\": "../custom/Request/",
+            "src\\Status\\": "../custom/Status/",
+            "src\\Transaction\\": "../custom/Transaction/",
+            "src\\Resource\\": "../custom/Resource/"
+        }
+    },
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/Artifriends-inc/system_daemon.git"
+        }
+    ],
+    "require": {
+        "ext-curl": "*",
+        "ext-json": "*",
+        "ext-mongodb": "*",
+        "ext-memcached": "*",
+        "ext-xdebug": "*",
+        "pear/system_daemon": "dev-master",
+        "monolog/monolog": "^1.24"
+    },
+    "require-dev": {
+        "kahlan/kahlan": "^4.5",
+        "friendsofphp/php-cs-fixer": "^2.14",
+        "phan/phan": "^1.2"
+    }
+}

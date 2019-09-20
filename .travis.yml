@@ -1,0 +1,38 @@
+language: php
+
+php:
+  - "7.1.26"
+
+addons:
+  hosts:
+    - mongo
+    - memcached
+
+services:
+  - memcached
+  - mongodb
+
+before_install:
+  - composer global require hirak/prestissimo
+
+install:
+  - chmod +x $TRAVIS_BUILD_DIR/install_extension.sh
+  - $TRAVIS_BUILD_DIR/install_extension.sh
+  - cd $TRAVIS_BUILD_DIR/api        && composer install --prefer-dist
+  - cd $TRAVIS_BUILD_DIR/saseuld    && composer install --prefer-dist
+  - cd $TRAVIS_BUILD_DIR/script     && composer install --prefer-dist
+  - cd $TRAVIS_BUILD_DIR/components && composer install --prefer-dist
+  - cd $TRAVIS_BUILD_DIR/doc        && composer install --prefer-dist
+
+script:
+  - cd $TRAVIS_BUILD_DIR/saseuld    && composer fixer -- --dry-run --diff --using-cache=no
+  - cd $TRAVIS_BUILD_DIR/api        && composer fixer -- --dry-run --diff --using-cache=no
+  - cd $TRAVIS_BUILD_DIR/script     && composer fixer -- --dry-run --diff --using-cache=no
+  - cd $TRAVIS_BUILD_DIR/components && composer fixer -- --dry-run --diff --using-cache=no
+  - cd $TRAVIS_BUILD_DIR/doc        && composer doc
+  - cd $TRAVIS_BUILD_DIR/saseuld    && composer run phan
+  - cd $TRAVIS_BUILD_DIR/api        && composer run phan
+  - cd $TRAVIS_BUILD_DIR/script     && yes | php saseul_script Reset
+  - cd $TRAVIS_BUILD_DIR/api        && composer test
+  - cd $TRAVIS_BUILD_DIR/components && composer test
+  - cd $TRAVIS_BUILD_DIR/saseuld    && composer test

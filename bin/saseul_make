@@ -1,0 +1,75 @@
+#!/bin/sh
+
+SCRIPT=`realpath $0`
+SCRIPT_PATH=`dirname $SCRIPT`
+SASEUL_PATH=`dirname $SCRIPT_PATH`
+
+SASEUL_DAEMON_PATH=$SASEUL_PATH/"saseuld/src"
+
+SASEUL_BLOCK_PATH=$SASEUL_PATH/"blockchain"
+SASEUL_BLOCK_APATH=$SASEUL_BLOCK_PATH/"apichunks"
+SASEUL_BLOCK_BPATH=$SASEUL_BLOCK_PATH/"broadcastchunks"
+SASEUL_BLOCK_TPATH=$SASEUL_BLOCK_PATH/"transactions"
+
+SASEUL_LOG_PATH="/var/log/saseul-origin"
+
+echo ""
+
+if [ -d $SASEUL_BLOCK_PATH ] ; then
+    rm -rf $SASEUL_BLOCK_PATH
+fi
+
+if [ ! -d $SASEUL_BLOCK_PATH ] ; then
+    TMP_META=($(ls -ld $SASEUL_DAEMON_PATH))
+    TMP_GROUP="${TMP_META[3]}"
+    TMP_USER="${TMP_META[2]}"
+
+    mkdir $SASEUL_BLOCK_PATH
+    chown -Rf $TMP_USER:$TMP_GROUP $SASEUL_BLOCK_PATH
+    chmod -Rf g+w $SASEUL_BLOCK_PATH
+
+    TMP_META=
+    TMP_GROUP=
+    TMP_USER=
+
+    echo "Block directory created. "
+    echo ""
+fi
+
+if [ ! -d $SASEUL_LOG_PATH ] ; then
+    mkdir $SASEUL_LOG_PATH
+
+    echo "Log directory created. "
+    echo ""
+fi
+
+if [ -d $SASEUL_BLOCK_PATH ] ; then
+    TMP_META=($(ls -ld $SASEUL_BLOCK_PATH))
+    TMP_GROUP="${TMP_META[3]}"
+    TMP_USER="${TMP_META[2]}"
+
+    if [ ! -d $SASEUL_BLOCK_APATH ] ; then
+        mkdir $SASEUL_BLOCK_APATH
+        chown -Rf $TMP_USER:$TMP_GROUP $SASEUL_BLOCK_APATH
+        chmod -Rf g+w $SASEUL_BLOCK_APATH
+    fi
+
+    if [ ! -d $SASEUL_BLOCK_BPATH ] ; then
+        mkdir $SASEUL_BLOCK_BPATH
+        chown -Rf $TMP_USER:$TMP_GROUP $SASEUL_BLOCK_BPATH
+        chmod -Rf g+w $SASEUL_BLOCK_BPATH
+    fi
+
+    if [ ! -d $SASEUL_BLOCK_TPATH ] ; then
+        mkdir $SASEUL_BLOCK_TPATH
+        chown -Rf $TMP_USER:$TMP_GROUP $SASEUL_BLOCK_TPATH
+        chmod -Rf g+w $SASEUL_BLOCK_TPATH
+    fi
+
+    TMP_META=
+    TMP_GROUP=
+    TMP_USER=
+
+    echo "Chunk directories created. "
+    echo ""
+fi

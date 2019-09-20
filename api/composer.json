@@ -1,0 +1,41 @@
+{
+    "name": "artifirends/saseul-origin-api",
+    "type": "project",
+    "authors": [
+        {
+            "name": "artifriends",
+            "email": "help@artifriends.com"
+        }
+    ],
+    "scripts": {
+        "fixer": "./vendor/bin/php-cs-fixer fix --using-cache=no",
+        "test": "./vendor/bin/kahlan",
+        "phan": "./vendor/bin/phan"
+    },
+    "autoload": {
+        "psr-4": {
+            "src\\": "./src/",
+            "src\\Config\\": "../common/Config/",
+            "src\\System\\": "../common/System/",
+            "src\\Util\\": "../common/Util/",
+            "src\\Method\\": "../custom/Method/",
+            "src\\Request\\": "../custom/Request/",
+            "src\\Status\\": "../custom/Status/",
+            "src\\Transaction\\": "../custom/Transaction/",
+            "src\\Resource\\": "../custom/Resource/"
+        }
+    },
+    "require": {
+        "ext-curl": "*",
+        "ext-json": "*",
+        "ext-memcached": "*",
+        "ext-mongodb": "*",
+        "ext-xdebug": "*",
+        "monolog/monolog": "^1.24"
+    },
+    "require-dev": {
+        "kahlan/kahlan": "^4.5",
+        "friendsofphp/php-cs-fixer": "^2.14",
+        "phan/phan": "^1.2"
+    }
+}
